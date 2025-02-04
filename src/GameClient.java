@@ -12,26 +12,28 @@ public class GameClient {
     private OnMessageReceivedListener messageListener;
     private OnPlayerJoinListener playerJoinListener;
 
-    //Interface to handle received messages
+    // Interface to handle received messages
     public interface OnMessageReceivedListener {
         void onMessageReceived(String message);
     }
 
-    //Interface to handle player join events
+    // Interface to handle player join events
     public interface OnPlayerJoinListener {
         void onPlayerJoin(String playerName);
     }
 
     /**
      * Constructor that initializes the WebSocket URL using the server address.
+     * 
      * @param serverAddress The IP or domain of the server.
      */
-    public GameClient(String serverAddress) { //Needs server address
+    public GameClient(String serverAddress) { // Needs server address
         this.serverAddress = "ws://" + serverAddress + "/game"; // WebSocket URL
     }
 
     /**
      * Sets the listener for handling incoming messages from the server.
+     * 
      * @param listener The listener instance.
      */
     public void setOnMessageReceivedListener(OnMessageReceivedListener listener) {
@@ -40,6 +42,7 @@ public class GameClient {
 
     /**
      * Sets the listener for handling player join events.
+     * 
      * @param listener The listener instance.
      */
     public void setOnPlayerJoinListener(OnPlayerJoinListener listener) {
@@ -48,7 +51,9 @@ public class GameClient {
 
     /**
      * Establishes a WebSocket connection to the server.
-     * @return true if the connection attempt is initiated, false if there's an error.
+     * 
+     * @return true if the connection attempt is initiated, false if there's an
+     *         error.
      */
     public boolean connect() {
         try {
@@ -63,11 +68,11 @@ public class GameClient {
                 public void onMessage(String message) {
                     Log.i("GameClient", "Received: " + message);
 
-                    if (messageListener != null) {//Tells message listener there is a message
+                    if (messageListener != null) {// Tells message listener there is a message
                         messageListener.onMessageReceived(message);
                     }
 
-                    if (message.startsWith("Player")) { //Check if message is a player joining
+                    if (message.startsWith("Player")) { // Check if message is a player joining
                         if (playerJoinListener != null) {
                             Log.d("GameClient", "Notifying player join: " + message);
                             playerJoinListener.onPlayerJoin(message);
@@ -93,7 +98,7 @@ public class GameClient {
         }
     }
 
-    //Sends message to server
+    // Sends message to server
     public void sendMessage(String message) {
         if (webSocketClient != null && webSocketClient.isOpen()) {
             webSocketClient.send(message);
@@ -101,7 +106,7 @@ public class GameClient {
         }
     }
 
-    //Disconnects websocket connection
+    // Disconnects websocket connection
     public void closeConnection() {
         if (webSocketClient != null) {
             webSocketClient.close();
