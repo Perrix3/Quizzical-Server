@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\User\\Desktop\\javax.websocket-api-1.1.jar",
+        "libs/javax.websocket-api-1.1.jar",
+        "libs/Java-WebSocket-1.6.0.jar"
+    ]
+}
