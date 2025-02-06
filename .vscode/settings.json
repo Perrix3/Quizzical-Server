@@ -4,6 +4,8 @@
         "c:\\Users\\User\\Desktop\\javax.websocket-api-1.1.jar",
         "libs/javax.websocket-api-1.1.jar",
         "libs/Java-WebSocket-1.6.0.jar",
-        "libs/json-20250107.jar"
+        "libs/json-20250107.jar",
+        "libs/tyrus-server-2.2.0.jar",
+        "libs/tyrus-standalone-client-2.2.0.jar"
     ]
 }

@@ -1,5 +1,3 @@
-// Package
-
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -8,8 +6,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
+import org.glassfish.tyrus.server.Server;
 
-@ServerEndpoint("/game") // Directory where client will connect to
 public class GameServer {
     private static final Set<Session> clients = new CopyOnWriteArraySet<>();
     private static final int MAX_PLAYERS = 6; // Amount of players allowed
@@ -180,5 +178,25 @@ public class GameServer {
             scoreMessage.append(" Player " + clientIDs.get(entry.getKey()) + ": " + entry.getValue() + " |");
         }
         broadcastMessage(scoreMessage.toString());
+    }
+
+    // Main method to start the WebSocket server
+    public static void main(String[] args) {
+        // Define the host and port
+        String host = "quizzical.klatul.com";
+        int port = 8089; // Port to run the server on
+
+        // Tyrus websocket server
+        Server server = new Server(host, port, "/ws", null, GameServer.class);
+
+        try {   
+            server.start();
+            System.out.println("WebSocket server is running on wss://" + host + ":" + port + "/game");
+            System.in.read(); // Keep the server running until you press Enter on terminal
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            server.stop();
+        }
     }
 }
