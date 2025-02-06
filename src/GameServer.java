@@ -70,7 +70,9 @@ public class GameServer {
             getQuestion(message, session);
         } else if (message.startsWith("answer ")) { // When a player submits an answer
             checkAnswer(message, session);
-        }
+        } else if (message.equals("roll")){
+            roll(message, session);
+        } 
 
         broadcastMessage(message);
     }
@@ -81,8 +83,27 @@ public class GameServer {
         error.printStackTrace();
     }
 
-    // Broadcasts messages to all connected clients
+    /**
+     * Broadcasts a message to all connected clients.
+     * 
+     * @param message The message to be sent.
+     */
     public static void broadcastMessage(String message) {
+        for (Session client : clients) {
+            try {
+                client.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Sends a message to all connected clients.
+     * 
+     * @param message The message to send.
+     */
+    public static void sendMessageToAllClients(String message) {
         for (Session client : clients) {
             try {
                 client.getBasicRemote().sendText(message);
@@ -180,6 +201,17 @@ public class GameServer {
         broadcastMessage(scoreMessage.toString());
     }
 
+    /**
+     * Rolls a D6 and broadcasts the result to all connected clients.
+     * 
+     * @param message Message sent to server starting with "roll".
+     * @param session Client session.
+     */
+    public void roll(String message, Session session){
+        int d= (int) (Math.random() * 6) + 1; // Random number from 1 to 6.
+        sendMessageToAllClients("Player " + clientIDs.get(session) + " rolled " + d); //Send the result to all clients
+    }
+
     // Main method to start the WebSocket server
     public static void main(String[] args) {
         // Define the host and port
@@ -199,4 +231,5 @@ public class GameServer {
             server.stop();
         }
     }
+
 }
