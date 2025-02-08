@@ -1,237 +1,139 @@
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArraySet;
-import org.glassfish.tyrus.server.Server;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
-@ServerEndpoint("/Game")
 public class GameServer {
-    private static final Set<Session> clients = new CopyOnWriteArraySet<>();
-    private static final int MAX_PLAYERS = 6; // Amount of players allowed
+    private static final int PORT = 8089;
+    private static final int MAX_PLAYERS = 6;
+
     private static boolean gameStarted = false;
-
     private static int clientID = 1;
-    private static final Map<Session, Integer> clientIDs = new HashMap<>(); // Map to associate ids with sessions
-    private static final Map<Session, Integer> playerScores = new HashMap<>(); // Map to store players' scores
 
-    // When a client connects
-    @OnOpen
-    public void onOpen(Session session) {
-        if (gameStarted) {
-            try { // Closes connection if a player tries to join after game has started
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (clients.size() < MAX_PLAYERS) {
-            clientIDs.put(session, clientID); // Saves id and session in map
-            playerScores.put(session, 0); // Initialize score to 0
-            clientID++;
+    private static final Set<ClientHandler> clients = new HashSet<>();
+    private static final Map<ClientHandler, Integer> playerScores = new HashMap<>();
 
-            clients.add(session);
-            try {
-                session.getBasicRemote().sendText("You are player " + clientIDs.get(session));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            broadcastMessage("Player joined. Total players: " + clients.size());
-        } else {
-            try { // Closes connection if a player tries to join after max players limit
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // When a client leaves, remove all session data
-    @OnClose
-    public void onClose(Session session) {
-        clients.remove(session);
-        clientIDs.remove(session);
-        playerScores.remove(session);
-        broadcastMessage("A player left. Total players: " + clients.size());
-    }
-
-    // When a message is received
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        System.out.println("Received: " + message);
-
-        if (message.equals("start") && !gameStarted) { // If server receives start message and game is not started,
-                                                       // start
-                                                       // game
-            gameStarted = true;
-            startGame();
-        } else if (message.startsWith("question ")) { // When it receives a question request, sends one
-            getQuestion(message, session);
-        } else if (message.startsWith("answer ")) { // When a player submits an answer
-            checkAnswer(message, session);
-        } else if (message.equals("roll")){
-            roll(message, session);
-        } 
-
-        broadcastMessage(message);
-    }
-
-    // If an error occurs
-    @OnError
-    public void onError(Session session, Throwable error) {
-        error.printStackTrace();
-    }
-
-    /**
-     * Broadcasts a message to all connected clients.
-     * 
-     * @param message The message to be sent.
-     */
-    public static void broadcastMessage(String message) {
-        for (Session client : clients) {
-            try {
-                client.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Sends a message to all connected clients.
-     * 
-     * @param message The message to send.
-     */
-    public static void sendMessageToAllClients(String message) {
-        for (Session client : clients) {
-            try {
-                client.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void startGame() {
-        // Game start logic here
-        while (gameStarted) {
-            try {
-                // Game continues running
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        broadcastMessage("Game starting!");
-    }
-
-    /**
-     * Grabs a question and sends it to the client.
-     * 
-     * @param message Message sent to server starting with "question ".
-     * @param session Client session.
-     */
-    @SuppressWarnings("unchecked")
-    private void getQuestion(String message, Session session) {
-        String[] parts = message.split(" ");
-        if (parts.length != 3) {
-            System.out.println("Invalid question request format.");
-            return;
-        }
-
-        String difficulty = parts[1];
-        String category = parts[2];
-
-        Map<String, Object> questionData = QuestionManager.getRandomQuestion(category, difficulty);
-        if (questionData == null) {
-            System.out.println("No questions found for " + category + " - " + difficulty);
-            return;
-        }
-
-        // Cast the Object to a List<String> before using toArray
-        List<String> answersList = (List<String>) questionData.get("answers");
-        String[] answersArray = answersList.toArray(new String[0]);
-
-        // Now you can join the elements
-        String questionMessage = "question|" + questionData.get("question") + "|"
-                + String.join(",", answersArray) + "|"
-                + questionData.get("correctIndex");
-        broadcastMessage(questionMessage);
-    }
-
-    /**
-     * Checks if the answer is correct and updates the player's score.
-     * 
-     * @param message Message sent to server starting with "answer ".
-     * @param session Client session.
-     */
-    private void checkAnswer(String message, Session session) {
-        String[] parts = message.split(" ");
-        if (parts.length != 2) {
-            System.out.println("Invalid answer format.");
-            return;
-        }
-
-        String answer = parts[1]; // The answer submitted by the player
-
-        // Get the correct answer index (you can store it earlier when sending the
-        // question)
-        int correctIndex = Integer.parseInt(parts[1]);
-
-        // Check if the answer is correct
-        if (Integer.parseInt(answer) == correctIndex) {
-            // Increase player's score
-            playerScores.put(session, playerScores.get(session) + 1);
-            broadcastMessage("Player " + clientIDs.get(session) + " answered correctly!");
-        } else {
-            broadcastMessage("Player " + clientIDs.get(session) + " answered incorrectly.");
-        }
-
-        // Broadcast updated scores
-        broadcastScores();
-    }
-
-    /**
-     * Broadcasts all player scores.
-     */
-    private void broadcastScores() {
-        StringBuilder scoreMessage = new StringBuilder("Scores:");
-        for (Map.Entry<Session, Integer> entry : playerScores.entrySet()) {
-            scoreMessage.append(" Player " + clientIDs.get(entry.getKey()) + ": " + entry.getValue() + " |");
-        }
-        broadcastMessage(scoreMessage.toString());
-    }
-
-    /**
-     * Rolls a D6 and broadcasts the result to all connected clients.
-     * 
-     * @param message Message sent to server starting with "roll".
-     * @param session Client session.
-     */
-    public void roll(String message, Session session){
-        int d= (int) (Math.random() * 6) + 1; // Random number from 1 to 6.
-        sendMessageToAllClients("Player " + clientIDs.get(session) + " rolled " + d); //Send the result to all clients
-    }
-
-    // Main method to start the WebSocket server
     public static void main(String[] args) {
-        // Define the host and port
-        String host = "localhost";
-        int port = 8089; // Port to run the server on
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("Game server started on port " + PORT);
 
-        // Tyrus websocket server
-        Server server = new Server(host, port, "/ws", null, GameServer.class);
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
 
-        try {   
-            server.start();
-            System.out.println("WebSocket server is running on ws://" + host + ":" + port + "/game");
-            System.in.read(); // Keep the server running until you press Enter on terminal
-        } catch (Exception e) {
+                if (gameStarted || clients.size() >= MAX_PLAYERS) {
+                    clientSocket.close(); // Reject new players if game started or full
+                    continue;
+                }
+
+                ClientHandler clientHandler = new ClientHandler(clientSocket, clientID++);
+                clients.add(clientHandler);
+                playerScores.put(clientHandler, 0);
+                new Thread(clientHandler).start();
+
+                broadcastMessage("Player joined. Total players: " + clients.size());
+            }
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            server.stop();
         }
     }
 
+    /** Sends a message to all players */
+    private static void broadcastMessage(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(message);
+        }
+    }
+
+    /** Handles client communication */
+    private static class ClientHandler implements Runnable {
+        private final Socket socket;
+        private final int playerID;
+        private PrintWriter out;
+        private BufferedReader in;
+
+        public ClientHandler(Socket socket, int playerID) {
+            this.socket = socket;
+            this.playerID = playerID;
+        }
+
+        @Override
+        public void run() {
+            try {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                sendMessage("You are player " + playerID);
+
+                String message;
+                while ((message = in.readLine()) != null) {
+                    handleMessage(message);
+                }
+            } catch (IOException e) {
+                System.out.println("Player " + playerID + " disconnected.");
+            } finally {
+                closeConnection();
+            }
+        }
+
+        /** Processes messages from clients */
+        private void handleMessage(String message) {
+            System.out.println("Received from Player " + playerID + ": " + message);
+
+            if (message.equals("start") && !gameStarted) {
+                gameStarted = true;
+                broadcastMessage("Game starting!");
+            } else if (message.startsWith("roll")) {
+                int roll = (int) (Math.random() * 6) + 1;
+                broadcastMessage("Player " + playerID + " rolled " + roll);
+            } else if (message.startsWith("answer ")) {
+                checkAnswer(message);
+            } else {
+                broadcastMessage("Player " + playerID + ": " + message);
+            }
+        }
+
+        /** Checks player answers and updates score */
+        private void checkAnswer(String message) {
+            String[] parts = message.split(" ");
+            if (parts.length != 2)
+                return;
+
+            int correctIndex = Integer.parseInt(parts[1]); // Simulated correct answer
+            int playerAnswer = Integer.parseInt(parts[1]);
+
+            if (playerAnswer == correctIndex) {
+                playerScores.put(this, playerScores.get(this) + 1);
+                broadcastMessage("Player " + playerID + " answered correctly!");
+            } else {
+                broadcastMessage("Player " + playerID + " answered incorrectly.");
+            }
+            broadcastScores();
+        }
+
+        /** Broadcasts updated scores */
+        private void broadcastScores() {
+            StringBuilder scoreMessage = new StringBuilder("Scores: ");
+            for (ClientHandler client : clients) {
+                scoreMessage.append("Player ").append(client.playerID).append(": ")
+                        .append(playerScores.get(client)).append(" | ");
+            }
+            broadcastMessage(scoreMessage.toString());
+        }
+
+        /** Sends a message to this player */
+        private void sendMessage(String message) {
+            out.println(message);
+        }
+
+        /** Closes connection and removes player */
+        private void closeConnection() {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clients.remove(this);
+            playerScores.remove(this);
+            broadcastMessage("Player " + playerID + " left. Total players: " + clients.size());
+        }
+    }
 }

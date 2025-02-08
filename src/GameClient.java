@@ -1,16 +1,20 @@
-import javax.websocket.*;
-import java.net.URI;
-import java.util.concurrent.CountDownLatch;
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
 
 public class GameClient {
     private String serverAddress;
-    private Session userSession;
+    private int serverPort;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
+
     private OnMessageReceivedListener messageListener;
     private OnPlayerJoinListener playerJoinListener;
-    private static CountDownLatch latch;
     private OnQuestionReceivedListener questionListener;
 
-    // Interface to handle received messages
+    private static final Scanner scanner = new Scanner(System.in); // Global scanner
+
     public interface OnMessageReceivedListener {
         void onMessageReceived(String message);
     }
@@ -25,148 +29,146 @@ public class GameClient {
         void onQuestionReceived(String question, String[] answers, int correctIndex);
     }
 
-    /**
-     * Client constructor.
-     * 
-     * @param serverAddress The IP or domain of the server.
-     */
-    public GameClient(String serverAddress) {
-        this.serverAddress = "ws://" + serverAddress + "/game"; // WebSocket URL
-    }
-
-    /**
-     * Sets the listener for handling messages from the server.
-     * 
-     * @param listener The listener instance.
-     */
-    public void setOnMessageReceivedListener(OnMessageReceivedListener listener) {
-        this.messageListener = listener;
-    }
-
-    /**
-     * Sets the listener for handling player join events.
-     * 
-     * @param listener The listener instance.
-     */
-    public void setOnPlayerJoinListener(OnPlayerJoinListener listener) {
-        this.playerJoinListener = listener;
-    }
-
-    /**
-     * Sets the listener for handling incoming questions.
-     * 
-     * @param listener The listener instance.
-     */
-    public void setOnQuestionReceivedListener(OnQuestionReceivedListener listener) {
-        this.questionListener = listener;
+    public GameClient(String serverAddress, int serverPort) {
+        this.serverAddress = serverAddress;
+        this.serverPort = serverPort;
     }
 
     /**
      * Establishes a WebSocket connection to the server.
      * 
-     * @return true if the connection attempt is initiated, false if there's an
-     *         error.
+     * @return Returns true if connected, false if failed.
      */
     public boolean connect() {
         try {
-            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            URI uri = new URI(serverAddress);
-            latch = new CountDownLatch(1); // Used to block the thread until connection is established
-            container.connectToServer(new ClientEndpoint(), uri);
-            latch.await(); // Wait until connected
+            socket = new Socket(serverAddress, serverPort);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            new Thread(this::listenForMessages).start(); // Start listening for server messages
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Sends message to server
+    /**
+     * Sends message to server
+     * 
+     * @param message Message.
+     */
     public void sendMessage(String message) {
-        if (userSession != null && userSession.isOpen()) {
-            try {
-                userSession.getBasicRemote().sendText(message);
-                // Log.i("GameClient", "Sent: " + message);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (out != null) {
+            out.println(message);
         }
     }
 
-    // Disconnects websocket connection
+    /**
+     * Closes server connection
+     */
     public void closeConnection() {
-        if (userSession != null) {
-            try {
-                userSession.close();
-                // Log.i("GameClient", "Disconnected from WebSocket server.");
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            if (socket != null) {
+                socket.close();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    // Client endpoint to handle WebSocket events
-    public class ClientEndpoint {
+    /**
+     * Listens for messages.
+     */
+    private void listenForMessages() {
+        try {
+            String message;
+            while ((message = in.readLine()) != null) {
+                System.out.println("Server: " + message);
 
-        @OnOpen
-        public void onOpen(Session session) {
-            // Log.i("GameClient", "Connected to WebSocket server!");
-            userSession = session;
-            latch.countDown(); // Allow the thread to continue after connection is established
-        }
-
-        @OnMessage
-        public void onMessage(String message) {
-            // Log.i("GameClient", "Received: " + message);
-
-            if (messageListener != null) {
-                messageListener.onMessageReceived(message);
-            }
-
-            if (message.startsWith("Player")) { // Check if message is a player joining
-                if (playerJoinListener != null) {
-                    // Log.d("GameClient", "Notifying player join: " + message);
-                    playerJoinListener.onPlayerJoin(message);
+                if (messageListener != null) {
+                    messageListener.onMessageReceived(message);
                 }
-            } else if (message.startsWith("question|")) { // Check if message is a question
-                handleQuestionMessage(message);
-            }
-        }
 
-        @OnClose
-        public void onClose(Session session, CloseReason closeReason) {
-            // Log.i("GameClient", "Connection closed: " + closeReason.getReasonPhrase());
-        }
-
-        @OnError
-        public void onError(Session session, Throwable throwable) {
-            // Log.e("GameClient", "Error: " + throwable.getMessage());
-            throwable.printStackTrace();
-        }
-
-        // Handle question messages from the server
-        private void handleQuestionMessage(String message) {
-            try {
-                // Split the message by the pipe symbol
-                String[] parts = message.split("\\|");
-
-                // Ensure message format is correct
-                if (parts.length == 4) {
-                    String question = parts[1];
-                    String[] answers = parts[2].split(",");
-                    int correctIndex = Integer.parseInt(parts[3]);
-
-                    // Notify the listener with the extracted question and answers
-                    if (questionListener != null) {
-                        questionListener.onQuestionReceived(question, answers, correctIndex);
+                if (message.startsWith("Player")) {
+                    if (playerJoinListener != null) {
+                        playerJoinListener.onPlayerJoin(message);
                     }
-                } else {
-                    // Invalid question format
-                    System.out.println("Invalid question format: " + message);
+                } else if (message.startsWith("question|")) {
+                    handleQuestionMessage(message);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            System.out.println("Disconnected from server.");
+        }
+    }
+
+    /**
+     * Handles questions received from the server.
+     * 
+     * @param message Question.
+     */
+    private void handleQuestionMessage(String message) {
+        try {
+            // Ensure message format is correct
+            String[] parts = message.split("\\|");
+
+            // Ensure message format is correct
+            if (parts.length == 4) {
+                String question = parts[1];
+                String[] answers = parts[2].split(",");
+                int correctIndex = Integer.parseInt(parts[3]);
+
+                if (questionListener != null) {
+                    questionListener.onQuestionReceived(question, answers, correctIndex);
+                }
+            } else {
+                System.out.println("Invalid question format: " + message);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setOnMessageReceivedListener(OnMessageReceivedListener listener) {
+        this.messageListener = listener;
+    }
+
+    public void setOnPlayerJoinListener(OnPlayerJoinListener listener) {
+        this.playerJoinListener = listener;
+    }
+
+    public void setOnQuestionReceivedListener(OnQuestionReceivedListener listener) {
+        this.questionListener = listener;
+    }
+
+    // Testing server
+    public static void main(String[] args) {
+        System.out.print("Enter server IP: ");
+        String serverIP = scanner.nextLine();
+
+        System.out.print("Enter server port: ");
+        int port = scanner.nextInt();
+        scanner.nextLine();
+
+        GameClient client = new GameClient(serverIP, port);
+
+        if (client.connect()) {
+            System.out.println("Connected to the game server!");
+
+            new Thread(() -> {
+                while (true) {
+                    String message = scanner.nextLine();
+                    if (message.equalsIgnoreCase("exit")) {
+                        client.closeConnection();
+                        System.out.println("Disconnected from server.");
+                        break;
+                    }
+                    client.sendMessage(message);
+                }
+            }).start();
+        } else {
+            System.out.println("Failed to connect to server.");
         }
     }
 }
