@@ -58,8 +58,9 @@ public class GameServer {
         @Override
         public void run() {
             try {
+                // Initialize input and output streams only once here to avoid NullPointerException
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
+                out = new PrintWriter(socket.getOutputStream(), true);  // true for auto-flush
 
                 sendMessage("You are player " + playerID);
 
@@ -86,6 +87,8 @@ public class GameServer {
                 broadcastMessage("Player " + playerID + " rolled " + roll);
             } else if (message.startsWith("answer ")) {
                 checkAnswer(message);
+            } else if (message.equals("getPlayers")) {
+                sendPlayerList();
             } else {
                 broadcastMessage("Player " + playerID + ": " + message);
             }
@@ -121,7 +124,11 @@ public class GameServer {
 
         /** Sends a message to this player */
         private void sendMessage(String message) {
-            out.println(message);
+            if (out != null) {
+                out.println(message);
+            } else {
+                System.out.println("Error: Output stream is null for player " + playerID);
+            }
         }
 
         /** Closes connection and removes player */
@@ -134,6 +141,17 @@ public class GameServer {
             clients.remove(this);
             playerScores.remove(this);
             broadcastMessage("Player " + playerID + " left. Total players: " + clients.size());
+        }
+
+        /**
+         * Sends player list.
+         */
+        private void sendPlayerList() {
+            StringBuilder playerListMessage = new StringBuilder("players|");
+            for (ClientHandler client : clients) {
+                playerListMessage.append("Player ").append(client.playerID).append(",");
+            }
+            broadcastMessage(playerListMessage.toString());
         }
     }
 }
