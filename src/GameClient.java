@@ -1,19 +1,29 @@
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 public class GameClient {
+    private static final String TAG = "GameClient"; // Tag for logging
+
+    private static GameClient instance;
     private String serverAddress;
     private int serverPort;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private List<String> playerNames = new ArrayList<>(); // Store player names
+    private boolean isHost;
 
     private OnMessageReceivedListener messageListener;
     private OnPlayerJoinListener playerJoinListener;
     private OnQuestionReceivedListener questionListener;
 
-    private static final Scanner scanner = new Scanner(System.in); // Global scanner
+
+    private static final Scanner scanner = new Scanner(System.in); // Global scanner  (Remove in production)
 
     public interface OnMessageReceivedListener {
         void onMessageReceived(String message);
@@ -22,6 +32,7 @@ public class GameClient {
     // Interface to handle player join events
     public interface OnPlayerJoinListener {
         void onPlayerJoin(String playerName);
+        void onPlayerListReceived(List<String> playerNames); // New method
     }
 
     // Interface to handle received questions
@@ -29,14 +40,36 @@ public class GameClient {
         void onQuestionReceived(String question, String[] answers, int correctIndex);
     }
 
-    public GameClient(String serverAddress, int serverPort) {
+    public static GameClient getInstance(String serverAddress, int serverPort) {
+        if (instance == null || !instance.isConnected()) {
+            instance = new GameClient(serverAddress, serverPort);
+            if (!instance.connect()) {
+                instance = null; // Reset instance if connection fails
+            }
+        }
+        return instance;
+    }
+
+    public static GameClient getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("GameClient not initialized. Call getInstance(address, port) first.");
+        }
+        return instance;
+    }
+
+
+    private GameClient(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
     }
 
+    public boolean isConnected() {
+        return socket != null && socket.isConnected() && !socket.isClosed();
+    }
+
     /**
      * Establishes a WebSocket connection to the server.
-     * 
+     *
      * @return Returns true if connected, false if failed.
      */
     public boolean connect() {
@@ -46,21 +79,26 @@ public class GameClient {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             new Thread(this::listenForMessages).start(); // Start listening for server messages
+           // Log.d(TAG, "Connected to server: " + serverAddress + ":" + serverPort);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
+           // Log.e(TAG, "Connection failed: " + e.getMessage());
             return false;
         }
     }
 
     /**
      * Sends message to server
-     * 
+     *
      * @param message Message.
      */
     public void sendMessage(String message) {
-        if (out != null) {
+        if (out != null && isConnected()) {
             out.println(message);
+           // Log.d(TAG, "Sent message: " + message);
+        } else {
+            //Log.w(TAG, "Message not sent. Client is not connected.");
         }
     }
 
@@ -71,9 +109,14 @@ public class GameClient {
         try {
             if (socket != null) {
                 socket.close();
+               // Log.d(TAG, "Connection closed.");
             }
         } catch (IOException e) {
             e.printStackTrace();
+          //  Log.e(TAG, "Error closing connection: " + e.getMessage());
+        } finally {
+            socket = null;
+            instance = null;
         }
     }
 
@@ -85,27 +128,30 @@ public class GameClient {
             String message;
             while ((message = in.readLine()) != null) {
                 System.out.println("Server: " + message);
+                //Log.d(TAG, "Received message: " + message);
 
                 if (messageListener != null) {
                     messageListener.onMessageReceived(message);
                 }
 
-                if (message.startsWith("Player")) {
-                    if (playerJoinListener != null) {
-                        playerJoinListener.onPlayerJoin(message);
-                    }
+                else if (message.startsWith("players|")) {
+                    handlePlayerListMessage(message);
+                } else if (message.startsWith("Player ")) { // Handle join/leave
+                    handlePlayerUpdateMessage(message);
                 } else if (message.startsWith("question|")) {
                     handleQuestionMessage(message);
                 }
             }
         } catch (IOException e) {
             System.out.println("Disconnected from server.");
+           // Log.e(TAG, "Disconnected from server: " + e.getMessage());
+            closeConnection();
         }
     }
 
     /**
      * Handles questions received from the server.
-     * 
+     *
      * @param message Question.
      */
     private void handleQuestionMessage(String message) {
@@ -124,9 +170,53 @@ public class GameClient {
                 }
             } else {
                 System.out.println("Invalid question format: " + message);
+                //Log.w(TAG, "Invalid question format: " + message);
             }
+        } catch (NumberFormatException e) {
+            //Log.e(TAG, "Error parsing correct index: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            //Log.e(TAG, "Error handling question: " + e.getMessage());
+        }
+    }
+
+    private void handlePlayerListMessage(String message) {
+        String playerListStr = message.substring("players|".length());
+        String[] players = playerListStr.split(",");
+        playerNames.clear(); // Clear existing list
+
+        // Add "You" to the list (Host or Player)
+        if (isHost) { // Make sure isHost is set correctly in your activities
+            playerNames.add("Host (You)");
+        } else {
+            playerNames.add("Player (You)");
+        }
+
+        for (String player : players) {
+            if (!player.isEmpty()) { // Check for empty strings
+                playerNames.add(player);
+            }
+        }
+
+        // Notify listeners (if any) that the player list has been updated
+        if (playerJoinListener != null) {
+            playerJoinListener.onPlayerListReceived(playerNames);
+        }
+    }
+
+    private void handlePlayerUpdateMessage(String message) {
+        String playerName = message;
+        if (message.endsWith("joined")) {
+            playerName = playerName.substring(7, playerName.length() - 7).trim(); // Extract name and trim
+            playerNames.add(playerName);
+        } else if (message.endsWith("left")) {
+            playerName = playerName.substring(7, playerName.length() - 5).trim(); // Extract name and trim
+            playerNames.remove(playerName);
+        }
+
+        // Notify listeners (if any) that the player list has been updated
+        if (playerJoinListener != null) {
+            playerJoinListener.onPlayerListReceived(playerNames);
         }
     }
 
@@ -142,7 +232,19 @@ public class GameClient {
         this.questionListener = listener;
     }
 
-    // Testing server
+    public List<String> getPlayerNames() {
+        return playerNames;
+    }
+
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
+    }
+
+    // Testing server (Remove in production)
     public static void main(String[] args) {
         System.out.print("Enter server IP: ");
         String serverIP = scanner.nextLine();

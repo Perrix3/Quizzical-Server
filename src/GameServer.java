@@ -58,11 +58,19 @@ public class GameServer {
         @Override
         public void run() {
             try {
-                // Initialize input and output streams only once here to avoid NullPointerException
+                // Initialize input and output streams only once here to avoid
+                // NullPointerException
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);  // true for auto-flush
+                out = new PrintWriter(socket.getOutputStream(), true); // true for auto-flush
 
                 sendMessage("You are player " + playerID);
+                System.out.println("Player " + playerID + " has joined.");
+
+                // Send the initial player list to the new client
+                sendPlayerList(this);
+
+                // Broadcast the updated player list to *all* clients when a new player joins
+                broadcastPlayerList(); // <--- Crucial addition: Broadcast on join
 
                 String message;
                 while ((message = in.readLine()) != null) {
@@ -88,7 +96,7 @@ public class GameServer {
             } else if (message.startsWith("answer ")) {
                 checkAnswer(message);
             } else if (message.equals("getPlayers")) {
-                sendPlayerList();
+                sendPlayerList(this);
             } else {
                 broadcastMessage("Player " + playerID + ": " + message);
             }
@@ -131,7 +139,6 @@ public class GameServer {
             }
         }
 
-        /** Closes connection and removes player */
         private void closeConnection() {
             try {
                 socket.close();
@@ -140,18 +147,39 @@ public class GameServer {
             }
             clients.remove(this);
             playerScores.remove(this);
-            broadcastMessage("Player " + playerID + " left. Total players: " + clients.size());
+
+            // Broadcast the updated player list to *all* clients when a player leaves
+            broadcastPlayerList(); // <--- Crucial addition: Broadcast on leave
         }
 
         /**
-         * Sends player list.
+         * Sends player list to whoever asks for it.
          */
-        private void sendPlayerList() {
+        private void sendPlayerList(ClientHandler client) {
+            StringBuilder playerListMessage = new StringBuilder("players|");
+            for (ClientHandler otherClient : clients) {
+                playerListMessage.append("Player ").append(otherClient.playerID).append(",");
+            }
+            String message = playerListMessage.toString();
+            if (message.endsWith(",")) {
+                message = message.substring(0, message.length() - 1); 
+            }
+            client.sendMessage(message);
+        }
+
+        /**
+         * Sends player list to all connected users.
+         */
+        private void broadcastPlayerList() {
             StringBuilder playerListMessage = new StringBuilder("players|");
             for (ClientHandler client : clients) {
                 playerListMessage.append("Player ").append(client.playerID).append(",");
             }
-            broadcastMessage(playerListMessage.toString());
+            String message = playerListMessage.toString();
+            if (message.endsWith(",")) {
+                message = message.substring(0, message.length() - 1);
+            }
+            broadcastMessage(message);
         }
     }
 }
