@@ -67,10 +67,10 @@ public class GameServer {
                 System.out.println("Player " + playerID + " has joined.");
 
                 // Send the initial player list to the new client
-                sendPlayerList(this);
+                sendPlayerList(this, false);
 
                 // Broadcast the updated player list to *all* clients when a new player joins
-                broadcastPlayerList(); // <--- Crucial addition: Broadcast on join
+                sendPlayerList(this, true);
 
                 String message;
                 while ((message = in.readLine()) != null) {
@@ -96,7 +96,7 @@ public class GameServer {
             } else if (message.startsWith("answer ")) {
                 checkAnswer(message);
             } else if (message.equals("getPlayers")) {
-                sendPlayerList(this);
+                sendPlayerList(this, true);
             } else {
                 broadcastMessage("Player " + playerID + ": " + message);
             }
@@ -148,38 +148,31 @@ public class GameServer {
             clients.remove(this);
             playerScores.remove(this);
 
-            // Broadcast the updated player list to *all* clients when a player leaves
-            broadcastPlayerList(); // <--- Crucial addition: Broadcast on leave
+            // Broadcast the updated player list to all clients when a player leaves
+            sendPlayerList(this, true);
         }
 
         /**
-         * Sends player list to whoever asks for it.
+         * Sends player list to a certain client if "sync" is false, and to all clients
+         * if true.
+         * 
+         * @param client Client who made the call.
+         * @param sync   True if want to broadcast message to all clients, false if not.
          */
-        private void sendPlayerList(ClientHandler client) {
+        private void sendPlayerList(ClientHandler client, Boolean sync) {
             StringBuilder playerListMessage = new StringBuilder("players|");
             for (ClientHandler otherClient : clients) {
                 playerListMessage.append("Player ").append(otherClient.playerID).append(",");
             }
             String message = playerListMessage.toString();
             if (message.endsWith(",")) {
-                message = message.substring(0, message.length() - 1); 
-            }
-            client.sendMessage(message);
-        }
-
-        /**
-         * Sends player list to all connected users.
-         */
-        private void broadcastPlayerList() {
-            StringBuilder playerListMessage = new StringBuilder("players|");
-            for (ClientHandler client : clients) {
-                playerListMessage.append("Player ").append(client.playerID).append(",");
-            }
-            String message = playerListMessage.toString();
-            if (message.endsWith(",")) {
                 message = message.substring(0, message.length() - 1);
             }
-            broadcastMessage(message);
+            if (sync) {
+                broadcastMessage(message);
+            } else {
+                client.sendMessage(message);
+            }
         }
     }
 }
