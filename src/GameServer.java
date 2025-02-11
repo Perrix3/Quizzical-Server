@@ -66,9 +66,6 @@ public class GameServer {
                 sendMessage("You are player " + playerID);
                 System.out.println("Player " + playerID + " has joined.");
 
-                // Send the initial player list to the new client
-                sendPlayerList(this, false);
-
                 // Broadcast the updated player list to *all* clients when a new player joins
                 sendPlayerList(this, true);
 
