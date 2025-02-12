@@ -1,0 +1,153 @@
+[
+    {
+      "question": "What is the powerhouse of the cell?",
+      "answers": ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+      "correctAnswer": "Mitochondria"
+    },
+    {
+      "question": "Which famous scientist developed the theory of relativity?",
+      "answers": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Marie Curie"],
+      "correctAnswer": "Albert Einstein"
+    },
+    {
+      "question": "In which year did the Titanic sink?",
+      "answers": ["1912", "1905", "1920", "1918"],
+      "correctAnswer": "1912"
+    },
+    {
+      "question": "Which planet has the most moons?",
+      "answers": ["Earth", "Jupiter", "Saturn", "Mars"],
+      "correctAnswer": "Saturn"
+    },
+    {
+      "question": "What is the capital of Japan?",
+      "answers": ["Beijing", "Seoul", "Tokyo", "Bangkok"],
+      "correctAnswer": "Tokyo"
+    },
+    {
+      "question": "Which element has the atomic number 1?",
+      "answers": ["Helium", "Oxygen", "Nitrogen", "Hydrogen"],
+      "correctAnswer": "Hydrogen"
+    },
+    {
+      "question": "Which country hosted the 2016 Summer Olympics?",
+      "answers": ["China", "Brazil", "Japan", "USA"],
+      "correctAnswer": "Brazil"
+    },
+    {
+      "question": "What is the smallest planet in our solar system?",
+      "answers": ["Mercury", "Mars", "Venus", "Neptune"],
+      "correctAnswer": "Mercury"
+    },
+    {
+      "question": "Which artist painted the ceiling of the Sistine Chapel?",
+      "answers": ["Leonardo da Vinci", "Raphael", "Michelangelo", "Donatello"],
+      "correctAnswer": "Michelangelo"
+    },
+    {
+      "question": "Who wrote 'Pride and Prejudice'?",
+      "answers": ["Charlotte Bronte", "Jane Austen", "Emily Bronte", "Mary Shelley"],
+      "correctAnswer": "Jane Austen"
+    },
+    {
+      "question": "Which organ is responsible for filtering blood in the human body?",
+      "answers": ["Lungs", "Kidneys", "Liver", "Heart"],
+      "correctAnswer": "Kidneys"
+    },
+    {
+      "question": "Which country is the origin of the tango dance?",
+      "answers": ["Cuba", "Argentina", "Brazil", "Spain"],
+      "correctAnswer": "Argentina"
+    },
+    {
+      "question": "What is the capital of Canada?",
+      "answers": ["Toronto", "Vancouver", "Montreal", "Ottawa"],
+      "correctAnswer": "Ottawa"
+    },
+    {
+      "question": "Which element has the chemical symbol 'Na'?",
+      "answers": ["Nitrogen", "Sodium", "Neon", "Nickel"],
+      "correctAnswer": "Sodium"
+    },
+    {
+      "question": "What type of rock is marble?",
+      "answers": ["Igneous", "Sedimentary", "Metamorphic", "Volcanic"],
+      "correctAnswer": "Metamorphic"
+    },
+    {
+      "question": "Which famous playwright wrote 'Hamlet'?",
+      "answers": ["William Shakespeare", "Christopher Marlowe", "Ben Jonson", "John Milton"],
+      "correctAnswer": "William Shakespeare"
+    },
+    {
+      "question": "How many teeth does an adult human have?",
+      "answers": ["28", "30", "32", "34"],
+      "correctAnswer": "32"
+    },
+    {
+      "question": "What is the longest river in the world?",
+      "answers": ["Amazon", "Nile", "Yangtze", "Mississippi"],
+      "correctAnswer": "Nile"
+    },
+    {
+      "question": "Which language is primarily spoken in Brazil?",
+      "answers": ["Spanish", "Portuguese", "French", "Italian"],
+      "correctAnswer": "Portuguese"
+    },
+    {
+      "question": "Which gas is most abundant in Earth's atmosphere?",
+      "answers": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"],
+      "correctAnswer": "Nitrogen"
+    },
+    {
+      "question": "What is the largest desert in the world?",
+      "answers": ["Gobi", "Sahara", "Antarctic", "Kalahari"],
+      "correctAnswer": "Antarctic"
+    },
+    {
+      "question": "Which organ produces insulin?",
+      "answers": ["Liver", "Stomach", "Pancreas", "Kidney"],
+      "correctAnswer": "Pancreas"
+    },
+    {
+      "question": "Which scientist proposed the three laws of motion?",
+      "answers": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"],
+      "correctAnswer": "Isaac Newton"
+    },
+    {
+      "question": "What is the chemical symbol for iron?",
+      "answers": ["Fe", "Ir", "In", "I"],
+      "correctAnswer": "Fe"
+    },
+    {
+      "question": "Which country is known as the Land of the Rising Sun?",
+      "answers": ["China", "Japan", "South Korea", "Vietnam"],
+      "correctAnswer": "Japan"
+    },
+    {
+      "question": "How many rings are there on the Olympic flag?",
+      "answers": ["4", "5", "6", "7"],
+      "correctAnswer": "5"
+    },
+    {
+      "question": "Which planet is closest to the Sun?",
+      "answers": ["Venus", "Mars", "Mercury", "Earth"],
+      "correctAnswer": "Mercury"
+    },
+    {
+      "question": "Which vitamin is produced when the human body is exposed to sunlight?",
+      "answers": ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin D"],
+      "correctAnswer": "Vitamin D"
+    },
+    {
+      "question": "Which sea creature has three hearts?",
+      "answers": ["Octopus", "Dolphin", "Shark", "Whale"],
+      "correctAnswer": "Octopus"
+    },
+    {
+      "question": "Which country is famous for the Leaning Tower of Pisa?",
+      "answers": ["France", "Spain", "Italy", "Portugal"],
+      "correctAnswer": "Italy"
+    }
+  ]
+  

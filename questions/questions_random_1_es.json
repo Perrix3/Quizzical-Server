@@ -1,0 +1,152 @@
+[
+    {
+      "question": "¿Cuál es la capital de Francia?",
+      "answers": ["París", "Londres", "Berlín", "Madrid"],
+      "correctAnswer": "París"
+    },
+    {
+      "question": "¿Qué planeta es conocido como el Planeta Rojo?",
+      "answers": ["Tierra", "Marte", "Venus", "Júpiter"],
+      "correctAnswer": "Marte"
+    },
+    {
+      "question": "¿Cuál es el mamífero más grande?",
+      "answers": ["Elefante", "Ballena Azul", "Jirafa", "Hipopótamo"],
+      "correctAnswer": "Ballena Azul"
+    },
+    {
+      "question": "¿Cuántos continentes hay en la Tierra?",
+      "answers": ["5", "6", "7", "8"],
+      "correctAnswer": "7"
+    },
+    {
+      "question": "¿Qué es H2O más comúnmente conocido?",
+      "answers": ["Hidrógeno", "Oxígeno", "Agua", "Helio"],
+      "correctAnswer": "Agua"
+    },
+    {
+      "question": "¿Qué gas usan principalmente las plantas en la fotosíntesis?",
+      "answers": ["Oxígeno", "Nitrógeno", "Dióxido de Carbono", "Helio"],
+      "correctAnswer": "Dióxido de Carbono"
+    },
+    {
+      "question": "¿Cuál es la raíz cuadrada de 64?",
+      "answers": ["6", "7", "8", "9"],
+      "correctAnswer": "8"
+    },
+    {
+      "question": "¿Cuál es el océano más grande?",
+      "answers": ["Atlántico", "Índico", "Ártico", "Pacífico"],
+      "correctAnswer": "Pacífico"
+    },
+    {
+      "question": "¿Cuál es el símbolo químico del oro?",
+      "answers": ["Au", "Ag", "Fe", "Pb"],
+      "correctAnswer": "Au"
+    },
+    {
+      "question": "¿Cuántas patas tienen las arañas?",
+      "answers": ["6", "8", "10", "12"],
+      "correctAnswer": "8"
+    },
+    {
+      "question": "¿Qué país es conocido por la producción de jarabe de arce?",
+      "answers": ["EE.UU.", "Canadá", "México", "Australia"],
+      "correctAnswer": "Canadá"
+    },
+    {
+      "question": "¿Cuál es el punto de congelación del agua en grados Celsius?",
+      "answers": ["0", "32", "100", "-10"],
+      "correctAnswer": "0"
+    },
+    {
+      "question": "¿Qué animal es conocido como el Rey de la Selva?",
+      "answers": ["Elefante", "Tigre", "León", "Oso"],
+      "correctAnswer": "León"
+    },
+    {
+      "question": "¿Cuántos colores tiene un arcoíris?",
+      "answers": ["5", "6", "7", "8"],
+      "correctAnswer": "7"
+    },
+    {
+      "question": "¿Qué elemento representa el símbolo 'O'?",
+      "answers": ["Oxígeno", "Osmio", "Oro", "Hidrógeno"],
+      "correctAnswer": "Oxígeno"
+    },
+    {
+      "question": "¿Cuál es el ingrediente principal del guacamole?",
+      "answers": ["Tomate", "Pepino", "Aguacate", "Pimiento"],
+      "correctAnswer": "Aguacate"
+    },
+    {
+      "question": "¿Cuántos lados tiene un triángulo?",
+      "answers": ["2", "3", "4", "5"],
+      "correctAnswer": "3"
+    },
+    {
+      "question": "¿Qué instrumento tiene 88 teclas?",
+      "answers": ["Guitarra", "Piano", "Violín", "Flauta"],
+      "correctAnswer": "Piano"
+    },
+    {
+      "question": "¿Qué fruta es conocida como el Rey de las Frutas?",
+      "answers": ["Manzana", "Durian", "Mango", "Plátano"],
+      "correctAnswer": "Durian"
+    },
+    {
+      "question": "¿Cuál es el número primo más pequeño?",
+      "answers": ["0", "1", "2", "3"],
+      "correctAnswer": "2"
+    },
+    {
+      "question": "¿De qué color es la clorofila?",
+      "answers": ["Rojo", "Verde", "Amarillo", "Azul"],
+      "correctAnswer": "Verde"
+    },
+    {
+      "question": "¿Cuál es el punto de ebullición del agua en grados Celsius?",
+      "answers": ["0", "50", "100", "150"],
+      "correctAnswer": "100"
+    },
+    {
+      "question": "¿Cuántos días tiene un año bisiesto?",
+      "answers": ["364", "365", "366", "367"],
+      "correctAnswer": "366"
+    },
+    {
+      "question": "¿Qué país es hogar del canguro?",
+      "answers": ["India", "Brasil", "Sudáfrica", "Australia"],
+      "correctAnswer": "Australia"
+    },
+    {
+      "question": "¿Cuántos corazones tiene un pulpo?",
+      "answers": ["1", "2", "3", "4"],
+      "correctAnswer": "3"
+    },
+    {
+      "question": "¿Qué mide un termómetro?",
+      "answers": ["Presión", "Temperatura", "Velocidad", "Distancia"],
+      "correctAnswer": "Temperatura"
+    },
+    {
+      "question": "¿Qué color se obtiene al mezclar rojo y blanco?",
+      "answers": ["Rosa", "Naranja", "Púrpura", "Marrón"],
+      "correctAnswer": "Rosa"
+    },
+    {
+      "question": "¿Cuál es el órgano interno más grande del cuerpo humano?",
+      "answers": ["Corazón", "Hígado", "Pulmón", "Cerebro"],
+      "correctAnswer": "Hígado"
+    },
+    {
+      "question": "¿Cuántos huesos tiene el cuerpo humano adulto?",
+      "answers": ["204", "206", "208", "210"],
+      "correctAnswer": "206"
+    },
+    {
+      "question": "¿Cuál es el nombre del hada en Peter Pan?",
+      "answers": ["Cenicienta", "Campanita", "Ariel", "Bella"],
+      "correctAnswer": "Campanita"
+    }
+]

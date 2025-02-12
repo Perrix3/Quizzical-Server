@@ -9,9 +9,12 @@ public class GameServer {
     private static boolean gameStarted = false;
     private static int clientID = 1;
     private static String difficulty;
+    private static int currentPlayerIndex = 0;
+    private static boolean gameOver = false;
 
     private static final Set<ClientHandler> clients = new HashSet<>();
     private static final Map<ClientHandler, Integer> playerScores = new HashMap<>();
+    private static List<ClientHandler> playerList = new ArrayList<>(); // Maintain player order
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
@@ -54,6 +57,7 @@ public class GameServer {
         public ClientHandler(Socket socket, int playerID) {
             this.socket = socket;
             this.playerID = playerID;
+            playerList.add(this);
         }
 
         @Override
@@ -70,6 +74,9 @@ public class GameServer {
                 // Broadcast the updated player list to *all* clients when a new player joins
                 sendPlayerList(this, true);
                 System.out.println("Sent player list to Player " + playerID);
+
+                sendMessage("id|" + playerID);
+                System.out.println("Sent id to player " + playerID);
 
                 String message;
                 while ((message = in.readLine()) != null) {
@@ -92,6 +99,8 @@ public class GameServer {
                 gameStarted = true;
                 broadcastMessage("Start");
                 System.out.println("Game started with difficulty " + difficulty);
+                broadcastMessage("turn|" + playerList.get(currentPlayerIndex).playerID); // Then send the turn message
+                System.out.println("First turn goes to Player "+playerID);
             } else if (message.startsWith("roll")) {
                 int roll = (int) (Math.random() * 6) + 1;
                 broadcastMessage("Player " + playerID + " rolled " + roll);
@@ -99,11 +108,35 @@ public class GameServer {
                 checkAnswer(message);
             } else if (message.equals("getPlayers")) {
                 sendPlayerList(this, true);
-            } else if (message.startsWith("|question")) {
+            } else if (message.startsWith("question|")) {
                 handleQuestionRequest(message);
+            } else if (message.equals("endTurn")) {
+                if (isTurn(this)) {
+                    endTurn();
+                }
+            } else if (message.equals("win")) {
+                handleWin(this);
             } else {
                 broadcastMessage("Player " + playerID + ": " + message);
             }
+        }
+
+        /**
+         * Check if it's x client's turn.
+         * 
+         * @param client Client to check turn.
+         * @return True if it's current client's turn, false if not.
+         */
+        private boolean isTurn(ClientHandler client) {
+            return playerList.indexOf(client) == currentPlayerIndex;
+        }
+
+        /**
+         * Ends current client's turn and starts next turn.
+         */
+        private void endTurn() {
+            currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size(); // Cycle through players
+            broadcastMessage("turn|" + playerList.get(currentPlayerIndex).playerID); // Signal next turn
         }
 
         /** Checks player answers and updates score */
@@ -176,6 +209,26 @@ public class GameServer {
                 broadcastMessage(message);
             } else {
                 client.sendMessage(message);
+            }
+        }
+
+        private void handleWin(ClientHandler winner) {
+            if (!gameOver) {
+                gameOver = true;
+                broadcastMessage("Player " + winner.playerID + " has won.");
+                broadcastMessage("Game Over!");
+
+                for (ClientHandler client : new HashSet<>(clients)) {
+                    client.closeConnection();
+                }
+                clients.clear();
+                playerScores.clear();
+                playerList.clear();
+                gameStarted = false;
+                gameOver = false;
+                clientID = 1;
+                currentPlayerIndex = 0;
+
             }
         }
 

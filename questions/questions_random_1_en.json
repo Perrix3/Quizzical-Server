@@ -1,0 +1,153 @@
+[
+    {
+      "question": "What is the capital of France?",
+      "answers": ["Paris", "London", "Berlin", "Madrid"],
+      "correctAnswer": "Paris"
+    },
+    {
+      "question": "Which planet is known as the Red Planet?",
+      "answers": ["Earth", "Mars", "Venus", "Jupiter"],
+      "correctAnswer": "Mars"
+    },
+    {
+      "question": "What is the largest mammal?",
+      "answers": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+      "correctAnswer": "Blue Whale"
+    },
+    {
+      "question": "How many continents are there on Earth?",
+      "answers": ["5", "6", "7", "8"],
+      "correctAnswer": "7"
+    },
+    {
+      "question": "What is H2O more commonly known as?",
+      "answers": ["Hydrogen", "Oxygen", "Water", "Helium"],
+      "correctAnswer": "Water"
+    },
+    {
+      "question": "Which gas do plants primarily use in photosynthesis?",
+      "answers": ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"],
+      "correctAnswer": "Carbon Dioxide"
+    },
+    {
+      "question": "What is the square root of 64?",
+      "answers": ["6", "7", "8", "9"],
+      "correctAnswer": "8"
+    },
+    {
+      "question": "Which ocean is the largest?",
+      "answers": ["Atlantic", "Indian", "Arctic", "Pacific"],
+      "correctAnswer": "Pacific"
+    },
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answers": ["Au", "Ag", "Fe", "Pb"],
+      "correctAnswer": "Au"
+    },
+    {
+      "question": "How many legs do spiders have?",
+      "answers": ["6", "8", "10", "12"],
+      "correctAnswer": "8"
+    },
+    {
+      "question": "Which country is known for its maple syrup production?",
+      "answers": ["USA", "Canada", "Mexico", "Australia"],
+      "correctAnswer": "Canada"
+    },
+    {
+      "question": "What is the freezing point of water in Celsius?",
+      "answers": ["0", "32", "100", "-10"],
+      "correctAnswer": "0"
+    },
+    {
+      "question": "Which animal is known as the King of the Jungle?",
+      "answers": ["Elephant", "Tiger", "Lion", "Bear"],
+      "correctAnswer": "Lion"
+    },
+    {
+      "question": "How many colors are in a rainbow?",
+      "answers": ["5", "6", "7", "8"],
+      "correctAnswer": "7"
+    },
+    {
+      "question": "Which element does the symbol 'O' represent?",
+      "answers": ["Oxygen", "Osmium", "Gold", "Hydrogen"],
+      "correctAnswer": "Oxygen"
+    },
+    {
+      "question": "What is the main ingredient in guacamole?",
+      "answers": ["Tomato", "Cucumber", "Avocado", "Pepper"],
+      "correctAnswer": "Avocado"
+    },
+    {
+      "question": "How many sides does a triangle have?",
+      "answers": ["2", "3", "4", "5"],
+      "correctAnswer": "3"
+    },
+    {
+      "question": "Which instrument has 88 keys?",
+      "answers": ["Guitar", "Piano", "Violin", "Flute"],
+      "correctAnswer": "Piano"
+    },
+    {
+      "question": "Which fruit is known as the King of Fruits?",
+      "answers": ["Apple", "Durian", "Mango", "Banana"],
+      "correctAnswer": "Durian"
+    },
+    {
+      "question": "What is the smallest prime number?",
+      "answers": ["0", "1", "2", "3"],
+      "correctAnswer": "2"
+    },
+    {
+      "question": "What color is chlorophyll?",
+      "answers": ["Red", "Green", "Yellow", "Blue"],
+      "correctAnswer": "Green"
+    },
+    {
+      "question": "What is the boiling point of water in Celsius?",
+      "answers": ["0", "50", "100", "150"],
+      "correctAnswer": "100"
+    },
+    {
+      "question": "How many days are there in a leap year?",
+      "answers": ["364", "365", "366", "367"],
+      "correctAnswer": "366"
+    },
+    {
+      "question": "Which country is home to the kangaroo?",
+      "answers": ["India", "Brazil", "South Africa", "Australia"],
+      "correctAnswer": "Australia"
+    },
+    {
+      "question": "How many hearts does an octopus have?",
+      "answers": ["1", "2", "3", "4"],
+      "correctAnswer": "3"
+    },
+    {
+      "question": "What does a thermometer measure?",
+      "answers": ["Pressure", "Temperature", "Speed", "Distance"],
+      "correctAnswer": "Temperature"
+    },
+    {
+      "question": "Which color is made by mixing red and white?",
+      "answers": ["Pink", "Orange", "Purple", "Brown"],
+      "correctAnswer": "Pink"
+    },
+    {
+      "question": "What is the largest internal organ in the human body?",
+      "answers": ["Heart", "Liver", "Lung", "Brain"],
+      "correctAnswer": "Liver"
+    },
+    {
+      "question": "How many bones are there in an adult human body?",
+      "answers": ["204", "206", "208", "210"],
+      "correctAnswer": "206"
+    },
+    {
+      "question": "What is the name of the fairy in Peter Pan?",
+      "answers": ["Cinderella", "Tinker Bell", "Ariel", "Belle"],
+      "correctAnswer": "Tinker Bell"
+    }
+  ]
+  

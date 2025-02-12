@@ -1,0 +1,153 @@
+[
+    {
+      "question": "¿Qué físico es acreditado con el desarrollo de la teoría de la electrodinámica cuántica?",
+      "answers": ["Albert Einstein", "Richard Feynman", "Niels Bohr", "Erwin Schrödinger"],
+      "correctAnswer": "Richard Feynman"
+    },
+    {
+      "question": "¿Cuál es el hueso más largo del cuerpo humano?",
+      "answers": ["Tibia", "Húmero", "Fémur", "Radio"],
+      "correctAnswer": "Fémur"
+    },
+    {
+      "question": "¿Qué civilización antigua construyó la ciudad de Machu Picchu?",
+      "answers": ["Maya", "Inca", "Azteca", "Olmeca"],
+      "correctAnswer": "Inca"
+    },
+    {
+      "question": "¿Cuál es la capital de Kazajistán?",
+      "answers": ["Astana", "Almaty", "Biskek", "Tashkent"],
+      "correctAnswer": "Astana"
+    },
+    {
+      "question": "¿Qué planeta del sistema solar tiene la actividad volcánica más intensa?",
+      "answers": ["Venus", "Tierra", "Marte", "Io"],
+      "correctAnswer": "Io"
+    },
+    {
+      "question": "¿Quién escribió la ópera 'El anillo del nibelungo'?",
+      "answers": ["Mozart", "Beethoven", "Wagner", "Tchaikovsky"],
+      "correctAnswer": "Wagner"
+    },
+    {
+      "question": "¿Cuál es el tipo de sangre más raro?",
+      "answers": ["A", "AB-negativo", "O-negativo", "B"],
+      "correctAnswer": "AB-negativo"
+    },
+    {
+      "question": "En la mitología griega, ¿quién es el dios del inframundo?",
+      "answers": ["Zeus", "Poseidón", "Hades", "Ares"],
+      "correctAnswer": "Hades"
+    },
+    {
+      "question": "¿Cuál es el país más pequeño del mundo por superficie?",
+      "answers": ["Mónaco", "San Marino", "Liechtenstein", "Ciudad del Vaticano"],
+      "correctAnswer": "Ciudad del Vaticano"
+    },
+    {
+      "question": "¿Quién desarrolló la vacuna contra la poliomielitis?",
+      "answers": ["Alexander Fleming", "Louis Pasteur", "Jonas Salk", "Edward Jenner"],
+      "correctAnswer": "Jonas Salk"
+    },
+    {
+      "question": "¿Qué elemento lleva el nombre del creador de la tabla periódica?",
+      "answers": ["Mendelevio", "Curio", "Einsteinio", "Fermio"],
+      "correctAnswer": "Mendelevio"
+    },
+    {
+      "question": "¿Qué guerra se libró entre los Lancaster y los York?",
+      "answers": ["La Guerra Civil Inglesa", "La Guerra de las Rosas", "La Guerra de los Cien Años", "Las Guerras Napoleónicas"],
+      "correctAnswer": "La Guerra de las Rosas"
+    },
+    {
+      "question": "¿Quién descubrió la penicilina?",
+      "answers": ["Marie Curie", "Alexander Fleming", "Gregor Mendel", "Joseph Lister"],
+      "correctAnswer": "Alexander Fleming"
+    },
+    {
+      "question": "¿Cuál es el elemento más pesado que ocurre naturalmente?",
+      "answers": ["Plomo", "Uranio", "Oro", "Platino"],
+      "correctAnswer": "Uranio"
+    },
+    {
+      "question": "¿Qué compositor es conocido por la 'Sonata Claro de Luna'?",
+      "answers": ["Chopin", "Beethoven", "Mozart", "Liszt"],
+      "correctAnswer": "Beethoven"
+    },
+    {
+      "question": "¿En qué año cayó el muro de Berlín?",
+      "answers": ["1989", "1990", "1985", "1991"],
+      "correctAnswer": "1989"
+    },
+    {
+      "question": "¿Cuál es el término para los animales que pueden vivir tanto en tierra como en agua?",
+      "answers": ["Reptiles", "Mamíferos", "Anfibios", "Peces"],
+      "correctAnswer": "Anfibios"
+    },
+    {
+      "question": "¿Qué artista del Renacimiento pintó 'La escuela de Atenas'?",
+      "answers": ["Leonardo da Vinci", "Rafael", "Miguel Ángel", "Donatello"],
+      "correctAnswer": "Rafael"
+    },
+    {
+      "question": "¿Quién fue el primer emperador de China?",
+      "answers": ["Liu Bang", "Qin Shi Huang", "Kublai Khan", "Wu Zetian"],
+      "correctAnswer": "Qin Shi Huang"
+    },
+    {
+      "question": "¿Qué científico es conocido por formular las leyes del movimiento planetario?",
+      "answers": ["Isaac Newton", "Galileo Galilei", "Johannes Kepler", "Tycho Brahe"],
+      "correctAnswer": "Johannes Kepler"
+    },
+    {
+      "question": "¿Cuál es el ingrediente principal de la sopa de miso japonesa tradicional?",
+      "answers": ["Soja", "Alga", "Pescado", "Arroz"],
+      "correctAnswer": "Soja"
+    },
+    {
+      "question": "¿Quién inventó la World Wide Web?",
+      "answers": ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Mark Zuckerberg"],
+      "correctAnswer": "Tim Berners-Lee"
+    },
+    {
+      "question": "¿Qué obra de Shakespeare presenta a los personajes Rosencrantz y Guildenstern?",
+      "answers": ["Macbeth", "Otelo", "Hamlet", "Rey Lear"],
+      "correctAnswer": "Hamlet"
+    },
+    {
+      "question": "¿Qué planeta es conocido por sus anillos?",
+      "answers": ["Júpiter", "Neptuno", "Saturno", "Urano"],
+      "correctAnswer": "Saturno"
+    },
+    {
+      "question": "¿Cuál es el océano más profundo?",
+      "answers": ["Atlántico", "Indico", "Austral", "Pacífico"],
+      "correctAnswer": "Pacífico"
+    },
+    {
+      "question": "¿Cuál es la fórmula química de la sal de mesa?",
+      "answers": ["NaCl", "KCl", "H2O", "CaCO3"],
+      "correctAnswer": "NaCl"
+    },
+    {
+      "question": "¿Quién es conocido como el 'Padre de la física moderna'?",
+      "answers": ["Albert Einstein", "Galileo Galilei", "Isaac Newton", "Niels Bohr"],
+      "correctAnswer": "Galileo Galilei"
+    },
+    {
+      "question": "¿Qué batalla marcó el fin del dominio de Napoleón?",
+      "answers": ["Batalla de Austerlitz", "Batalla de Leipzig", "Batalla de Trafalgar", "Batalla de Waterloo"],
+      "correctAnswer": "Batalla de Waterloo"
+    },
+    {
+        "question": "¿Cual es la capital de Islandia?",
+        "answers": ["Helsinki", "Reikiavik", "Oslo", "Copenhague"],
+        "correctAnswer": "Reikiavik"
+      },
+      {
+        "question": "¿Qué antiguo filósofo griego fue el profesor de Platón?", 
+        "answers": ["Aristóteles", "Sócrates", "Pitágoras", "Heráclito"],
+        "correctAnswer": "Sócrates"
+      }
+    ]
+  

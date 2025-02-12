@@ -1,0 +1,152 @@
+[
+    {
+      "question": "¿Cuál es la central energética de la célula?",
+      "answers": ["Núcleo", "Mitocondria", "Ribosoma", "Cloroplasto"],
+      "correctAnswer": "Mitocondria"
+    },
+    {
+      "question": "¿Qué famoso científico desarrolló la teoría de la relatividad?",
+      "answers": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Marie Curie"],
+      "correctAnswer": "Albert Einstein"
+    },
+    {
+      "question": "¿En qué año se hundió el Titanic?",
+      "answers": ["1912", "1905", "1920", "1918"],
+      "correctAnswer": "1912"
+    },
+    {
+      "question": "¿Qué planeta tiene más lunas?",
+      "answers": ["Tierra", "Júpiter", "Saturno", "Marte"],
+      "correctAnswer": "Saturno"
+    },
+    {
+      "question": "¿Cuál es la capital de Japón?",
+      "answers": ["Pekín", "Seúl", "Tokio", "Bangkok"],
+      "correctAnswer": "Tokio"
+    },
+    {
+      "question": "¿Qué elemento tiene el número atómico 1?",
+      "answers": ["Helio", "Oxígeno", "Nitrógeno", "Hidrógeno"],
+      "correctAnswer": "Hidrógeno"
+    },
+    {
+      "question": "¿Qué país fue el anfitrión de los Juegos Olímpicos de verano de 2016?",
+      "answers": ["China", "Brasil", "Japón", "EE. UU."],
+      "correctAnswer": "Brasil"
+    },
+    {
+      "question": "¿Cuál es el planeta más pequeño de nuestro sistema solar?",
+      "answers": ["Mercurio", "Marte", "Venus", "Neptuno"],
+      "correctAnswer": "Mercurio"
+    },
+    {
+      "question": "¿Qué artista pintó el techo de la Capilla Sixtina?",
+      "answers": ["Leonardo da Vinci", "Rafael", "Miguel Ángel", "Donatello"],
+      "correctAnswer": "Miguel Ángel"
+    },
+    {
+      "question": "¿Quién escribió 'Orgullo y prejuicio'?",
+      "answers": ["Charlotte Bronte", "Jane Austen", "Emily Bronte", "Mary Shelley"],
+      "correctAnswer": "Jane Austen"
+    },
+    {
+      "question": "¿Qué órgano es responsable de filtrar la sangre en el cuerpo humano?",
+      "answers": ["Pulmones", "Riñones", "Hígado", "Corazón"],
+      "correctAnswer": "Riñones"
+    },
+    {
+      "question": "¿Qué país es el origen del tango?",
+      "answers": ["Cuba", "Argentina", "Brasil", "España"],
+      "correctAnswer": "Argentina"
+    },
+    {
+      "question": "¿Cuál es la capital de Canadá?",
+      "answers": ["Toronto", "Vancouver", "Montreal", "Ottawa"],
+      "correctAnswer": "Ottawa"
+    },
+    {
+      "question": "¿Qué elemento tiene el símbolo químico 'Na'?",
+      "answers": ["Nitrógeno", "Sodio", "Neón", "Níquel"],
+      "correctAnswer": "Sodio"
+    },
+    {
+      "question": "¿Qué tipo de roca es el mármol?",
+      "answers": ["Ígnea", "Sedimentaria", "Metamórfica", "Volcánica"],
+      "correctAnswer": "Metamórfica"
+    },
+    {
+      "question": "¿Qué famoso dramaturgo escribió 'Hamlet'?",
+      "answers": ["William Shakespeare", "Christopher Marlowe", "Ben Jonson", "John Milton"],
+      "correctAnswer": "William Shakespeare"
+    },
+    {
+      "question": "¿Cuántos dientes tiene un humano adulto?",
+      "answers": ["28", "30", "32", "34"],
+      "correctAnswer": "32"
+    },
+    {
+      "question": "¿Cuál es el río más largo del mundo?",
+      "answers": ["Amazonas", "Nilo", "Yangtsé", "Misisipi"],
+      "correctAnswer": "Nilo"
+    },
+    {
+      "question": "¿Qué idioma se habla principalmente en Brasil?",
+      "answers": ["Español", "Portugués", "Francés", "Italiano"],
+      "correctAnswer": "Portugués"
+    },
+    {
+      "question": "¿Qué gas es el más abundante en la atmósfera terrestre?",
+      "answers": ["Oxígeno", "Dióxido de carbono", "Nitrógeno", "Argón"],
+      "correctAnswer": "Nitrógeno"
+    },
+    {
+      "question": "¿Cuál es el desierto más grande del mundo?",
+      "answers": ["Gobi", "Sahara", "Antártico", "Kalahari"],
+      "correctAnswer": "Antártico"
+    },
+    {
+      "question": "¿Qué órgano produce insulina?",
+      "answers": ["Hígado", "Estómago", "Páncreas", "Riñón"],
+      "correctAnswer": "Páncreas"
+    },
+    {
+      "question": "¿Qué científico propuso las tres leyes del movimiento?",
+      "answers": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"],
+      "correctAnswer": "Isaac Newton"
+    },
+    {
+      "question": "¿Cuál es el símbolo químico del hierro?",
+      "answers": ["Fe", "Ir", "In", "I"],
+      "correctAnswer": "Fe"
+    },
+    {
+      "question": "¿Qué país es conocido como la Tierra del Sol Naciente?",
+      "answers": ["China", "Japón", "Corea del Sur", "Vietnam"],
+      "correctAnswer": "Japón"
+    },
+    {
+      "question": "¿Cuántos anillos hay en la bandera olímpica?",
+      "answers": ["4", "5", "6", "7"],
+      "correctAnswer": "5"
+    },
+    {
+      "question": "¿Qué planeta está más cerca del Sol?",
+      "answers": ["Venus", "Marte", "Mercurio", "Tierra"],
+      "correctAnswer": "Mercurio"
+    },
+    {
+      "question": "¿Qué vitamina se produce cuando el cuerpo humano se expone a la luz solar?",
+      "answers": ["Vitamina A", "Vitamina B12", "Vitamina C", "Vitamina D"],
+      "correctAnswer": "Vitamina D"
+    },
+    {
+      "question": "¿Qué criatura marina tiene tres corazones?",
+      "answers": ["Pulpo", "Delfín", "Tiburón", "Ballena"],
+      "correctAnswer": "Pulpo"
+    },
+    {
+      "question": "¿Qué país es famoso por la Torre Inclinada de Pisa?",
+      "answers": ["Francia", "España", "Italia", "Portugal"],
+      "correctAnswer": "Italia"
+    }
+]

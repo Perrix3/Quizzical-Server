@@ -1,0 +1,153 @@
+[
+    {
+      "question": "Which physicist is credited with developing the theory of quantum electrodynamics?",
+      "answers": ["Albert Einstein", "Richard Feynman", "Niels Bohr", "Erwin Schrödinger"],
+      "correctAnswer": "Richard Feynman"
+    },
+    {
+      "question": "What is the longest bone in the human body?",
+      "answers": ["Tibia", "Humerus", "Femur", "Radius"],
+      "correctAnswer": "Femur"
+    },
+    {
+      "question": "Which ancient civilization built the city of Machu Picchu?",
+      "answers": ["Mayan", "Incan", "Aztec", "Olmec"],
+      "correctAnswer": "Incan"
+    },
+    {
+      "question": "What is the capital of Kazakhstan?",
+      "answers": ["Astana", "Almaty", "Bishkek", "Tashkent"],
+      "correctAnswer": "Astana"
+    },
+    {
+      "question": "Which planet in the solar system has the most intense volcanic activity?",
+      "answers": ["Venus", "Earth", "Mars", "Io"],
+      "correctAnswer": "Io"
+    },
+    {
+      "question": "Who wrote the opera 'The Ring of the Nibelung'?",
+      "answers": ["Mozart", "Beethoven", "Wagner", "Tchaikovsky"],
+      "correctAnswer": "Wagner"
+    },
+    {
+      "question": "What is the rarest blood type?",
+      "answers": ["A", "AB-negative", "O-negative", "B"],
+      "correctAnswer": "AB-negative"
+    },
+    {
+      "question": "In Greek mythology, who is the god of the underworld?",
+      "answers": ["Zeus", "Poseidon", "Hades", "Ares"],
+      "correctAnswer": "Hades"
+    },
+    {
+      "question": "What is the smallest country in the world by land area?",
+      "answers": ["Monaco", "San Marino", "Liechtenstein", "Vatican City"],
+      "correctAnswer": "Vatican City"
+    },
+    {
+      "question": "Who developed the polio vaccine?",
+      "answers": ["Alexander Fleming", "Louis Pasteur", "Jonas Salk", "Edward Jenner"],
+      "correctAnswer": "Jonas Salk"
+    },
+    {
+      "question": "Which element is named after the creator of the periodic table?",
+      "answers": ["Mendelevium", "Curium", "Einsteinium", "Fermium"],
+      "correctAnswer": "Mendelevium"
+    },
+    {
+      "question": "Which war was fought between the Lancastrians and the Yorkists?",
+      "answers": ["The English Civil War", "The War of the Roses", "The Hundred Years' War", "The Napoleonic Wars"],
+      "correctAnswer": "The War of the Roses"
+    },
+    {
+      "question": "Who discovered penicillin?",
+      "answers": ["Marie Curie", "Alexander Fleming", "Gregor Mendel", "Joseph Lister"],
+      "correctAnswer": "Alexander Fleming"
+    },
+    {
+      "question": "What is the heaviest naturally occurring element?",
+      "answers": ["Lead", "Uranium", "Gold", "Platinum"],
+      "correctAnswer": "Uranium"
+    },
+    {
+      "question": "Which composer is known for the 'Moonlight Sonata'?",
+      "answers": ["Chopin", "Beethoven", "Mozart", "Liszt"],
+      "correctAnswer": "Beethoven"
+    },
+    {
+      "question": "In what year did the Berlin Wall fall?",
+      "answers": ["1989", "1990", "1985", "1991"],
+      "correctAnswer": "1989"
+    },
+    {
+      "question": "What is the term for animals that can live both on land and in water?",
+      "answers": ["Reptiles", "Mammals", "Amphibians", "Fish"],
+      "correctAnswer": "Amphibians"
+    },
+    {
+      "question": "Which Renaissance artist painted the 'School of Athens'?",
+      "answers": ["Leonardo da Vinci", "Raphael", "Michelangelo", "Donatello"],
+      "correctAnswer": "Raphael"
+    },
+    {
+      "question": "Who was the first Emperor of China?",
+      "answers": ["Liu Bang", "Qin Shi Huang", "Kublai Khan", "Wu Zetian"],
+      "correctAnswer": "Qin Shi Huang"
+    },
+    {
+      "question": "Which scientist is known for formulating the laws of planetary motion?",
+      "answers": ["Isaac Newton", "Galileo Galilei", "Johannes Kepler", "Tycho Brahe"],
+      "correctAnswer": "Johannes Kepler"
+    },
+    {
+      "question": "What is the main ingredient in traditional Japanese miso soup?",
+      "answers": ["Soybeans", "Seaweed", "Fish", "Rice"],
+      "correctAnswer": "Soybeans"
+    },
+    {
+      "question": "Who invented the World Wide Web?",
+      "answers": ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Mark Zuckerberg"],
+      "correctAnswer": "Tim Berners-Lee"
+    },
+    {
+      "question": "Which Shakespeare play features the characters Rosencrantz and Guildenstern?",
+      "answers": ["Macbeth", "Othello", "Hamlet", "King Lear"],
+      "correctAnswer": "Hamlet"
+    },
+    {
+      "question": "Which planet is known for its rings?",
+      "answers": ["Jupiter", "Neptune", "Saturn", "Uranus"],
+      "correctAnswer": "Saturn"
+    },
+    {
+      "question": "Which ocean is the deepest?",
+      "answers": ["Atlantic", "Indian", "Southern", "Pacific"],
+      "correctAnswer": "Pacific"
+    },
+    {
+      "question": "What is the chemical formula for table salt?",
+      "answers": ["NaCl", "KCl", "H2O", "CaCO3"],
+      "correctAnswer": "NaCl"
+    },
+    {
+      "question": "Who is known as the 'Father of Modern Physics'?",
+      "answers": ["Albert Einstein", "Galileo Galilei", "Isaac Newton", "Niels Bohr"],
+      "correctAnswer": "Galileo Galilei"
+    },
+    {
+      "question": "Which battle marked the end of Napoleon's rule?",
+      "answers": ["Battle of Austerlitz", "Battle of Leipzig", "Battle of Trafalgar", "Battle of Waterloo"],
+      "correctAnswer": "Battle of Waterloo"
+    },
+    {
+      "question": "What is the capital of Iceland?",
+      "answers": ["Helsinki", "Reykjavik", "Oslo", "Copenhagen"],
+      "correctAnswer": "Reykjavik"
+    },
+    {
+      "question": "Which ancient Greek philosopher was the teacher of Plato?",
+      "answers": ["Aristotle", "Socrates", "Pythagoras", "Heraclitus"],
+      "correctAnswer": "Socrates"
+    }
+  ]
+  
