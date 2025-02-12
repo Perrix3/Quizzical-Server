@@ -8,6 +8,7 @@ public class GameServer {
 
     private static boolean gameStarted = false;
     private static int clientID = 1;
+    private static String difficulty;
 
     private static final Set<ClientHandler> clients = new HashSet<>();
     private static final Map<ClientHandler, Integer> playerScores = new HashMap<>();
@@ -68,6 +69,7 @@ public class GameServer {
 
                 // Broadcast the updated player list to *all* clients when a new player joins
                 sendPlayerList(this, true);
+                System.out.println("Sent player list to Player " + playerID);
 
                 String message;
                 while ((message = in.readLine()) != null) {
@@ -84,9 +86,12 @@ public class GameServer {
         private void handleMessage(String message) {
             System.out.println("Received from Player " + playerID + ": " + message);
 
-            if (message.equals("start") && !gameStarted) {
+            if (message.startsWith("start") && gameStarted == false) {
+                String[] parts = message.split("\\|");
+                difficulty = parts[1];
                 gameStarted = true;
-                broadcastMessage("Game starting!");
+                broadcastMessage("Start");
+                System.out.println("Game started with difficulty " + difficulty);
             } else if (message.startsWith("roll")) {
                 int roll = (int) (Math.random() * 6) + 1;
                 broadcastMessage("Player " + playerID + " rolled " + roll);
@@ -94,6 +99,8 @@ public class GameServer {
                 checkAnswer(message);
             } else if (message.equals("getPlayers")) {
                 sendPlayerList(this, true);
+            } else if (message.startsWith("|question")) {
+                handleQuestionRequest(message);
             } else {
                 broadcastMessage("Player " + playerID + ": " + message);
             }
@@ -171,5 +178,35 @@ public class GameServer {
                 client.sendMessage(message);
             }
         }
+
+        private void handleQuestionRequest(String message) {
+            String[] parts = message.split("\\|");
+            String category = parts[1];
+            String lang = parts[2];
+            Map<String, Object> questionData = QuestionManager.getRandomQuestion(category, difficulty, lang); // Use
+                                                                                                              // stored
+                                                                                                              // difficulty
+
+            if (questionData != null) {
+                StringBuilder questionMessage = new StringBuilder("question|");
+                questionMessage.append(questionData.get("question")).append("|");
+
+                @SuppressWarnings("unchecked")
+                List<String> answers = (List<String>) questionData.get("answers");
+
+                for (int i = 0; i < answers.size(); i++) {
+                    questionMessage.append(answers.get(i));
+                    if (i < answers.size() - 1) {
+                        questionMessage.append(",");
+                    }
+                }
+                questionMessage.append("|").append(questionData.get("correctIndex"));
+
+                sendMessage(questionMessage.toString()); // Send the formatted message
+            } else {
+                sendMessage("No questions found for that category, difficulty, and language.");
+            }
+        }
+
     }
 }

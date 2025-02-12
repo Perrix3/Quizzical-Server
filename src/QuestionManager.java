@@ -18,8 +18,8 @@ public class QuestionManager {
      * @return A map containing the question, answers, and correct answer, or null
      *         if no questions found.
      */
-    public static Map<String, Object> getRandomQuestion(String category, String difficulty) {
-        String filePath = BASE_PATH + "questions_" + category + "_" + difficulty + ".json"; // Builds the correct file
+    public static Map<String, Object> getRandomQuestion(String category, String difficulty, String lang) {
+        String filePath = BASE_PATH + "questions_" + category + "_" + difficulty + "_"+lang+".json"; // Builds the correct file
                                                                                             // path
 
         List<Map<String, Object>> questionsList = readQuestions(filePath); // Reads all questions from the file

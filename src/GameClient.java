@@ -21,6 +21,7 @@ public class GameClient {
     private OnMessageReceivedListener messageListener;
     private OnPlayerJoinListener playerJoinListener;
     private OnQuestionReceivedListener questionListener;
+    private OnHostStatusListener hostStatusListener;
 
 
     private static final Scanner scanner = new Scanner(System.in); // Global scanner  (Remove in production)
@@ -38,6 +39,11 @@ public class GameClient {
     // Interface to handle received questions
     public interface OnQuestionReceivedListener {
         void onQuestionReceived(String question, String[] answers, int correctIndex);
+    }
+
+    // Interface to handle host status
+    public interface OnHostStatusListener {
+        void onHostStatusReceived(boolean isHost);
     }
 
     public static GameClient getInstance(String serverAddress, int serverPort) {
@@ -79,11 +85,9 @@ public class GameClient {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             new Thread(this::listenForMessages).start(); // Start listening for server messages
-           // Log.d(TAG, "Connected to server: " + serverAddress + ":" + serverPort);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-           // Log.e(TAG, "Connection failed: " + e.getMessage());
             return false;
         }
     }
@@ -96,9 +100,7 @@ public class GameClient {
     public void sendMessage(String message) {
         if (out != null && isConnected()) {
             out.println(message);
-           // Log.d(TAG, "Sent message: " + message);
         } else {
-            //Log.w(TAG, "Message not sent. Client is not connected.");
         }
     }
 
@@ -109,11 +111,9 @@ public class GameClient {
         try {
             if (socket != null) {
                 socket.close();
-               // Log.d(TAG, "Connection closed.");
             }
         } catch (IOException e) {
             e.printStackTrace();
-          //  Log.e(TAG, "Error closing connection: " + e.getMessage());
         } finally {
             socket = null;
             instance = null;
@@ -128,13 +128,15 @@ public class GameClient {
             String message;
             while ((message = in.readLine()) != null) {
                 System.out.println("Server: " + message);
-                //Log.d(TAG, "Received message: " + message);
 
                 if (messageListener != null) {
                     messageListener.onMessageReceived(message);
-                }
-
-                else if (message.startsWith("players|")) {
+                } else if(message.equals("Host")){
+                    setHost(true);
+                    if (hostStatusListener != null) {
+                        hostStatusListener.onHostStatusReceived(true);
+                    }
+                } else if (message.startsWith("players|")) {
                     handlePlayerListMessage(message);
                 } else if (message.startsWith("Player ")) { // Handle join/leave
                     handlePlayerUpdateMessage(message);
@@ -144,7 +146,6 @@ public class GameClient {
             }
         } catch (IOException e) {
             System.out.println("Disconnected from server.");
-           // Log.e(TAG, "Disconnected from server: " + e.getMessage());
             closeConnection();
         }
     }
@@ -170,13 +171,10 @@ public class GameClient {
                 }
             } else {
                 System.out.println("Invalid question format: " + message);
-                //Log.w(TAG, "Invalid question format: " + message);
             }
         } catch (NumberFormatException e) {
-            //Log.e(TAG, "Error parsing correct index: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            //Log.e(TAG, "Error handling question: " + e.getMessage());
         }
     }
 
@@ -184,13 +182,6 @@ public class GameClient {
         String playerListStr = message.substring("players|".length());
         String[] players = playerListStr.split(",");
         playerNames.clear(); // Clear existing list
-
-        // Add "You" to the list (Host or Player)
-        if (isHost) { // Make sure isHost is set correctly in your activities
-            playerNames.add("Host (You)");
-        } else {
-            playerNames.add("Player (You)");
-        }
 
         for (String player : players) {
             if (!player.isEmpty()) { // Check for empty strings
@@ -230,6 +221,10 @@ public class GameClient {
 
     public void setOnQuestionReceivedListener(OnQuestionReceivedListener listener) {
         this.questionListener = listener;
+    }
+
+    public void setOnHostStatusListener(OnHostStatusListener listener) {
+        this.hostStatusListener = listener;
     }
 
     public List<String> getPlayerNames() {
